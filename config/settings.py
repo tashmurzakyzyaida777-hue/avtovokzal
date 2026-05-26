@@ -12,6 +12,22 @@ SECRET_KEY = config("DJANGO_SECRET_KEY", default="dev-secret-key")
 DEBUG = config("DJANGO_DEBUG", default=True, cast=bool)
 ALLOWED_HOSTS = config("DJANGO_ALLOWED_HOSTS", default="*", cast=Csv())
 
+# CSRF Trusted Origins for Vercel and Local execution
+CSRF_TRUSTED_ORIGINS = [
+    "https://*.vercel.app",
+    "http://127.0.0.1:8000",
+    "http://localhost:8000",
+]
+for host in ALLOWED_HOSTS:
+    if host and host != "*":
+        if not host.startswith("."):
+            CSRF_TRUSTED_ORIGINS.append(f"https://{host}")
+            CSRF_TRUSTED_ORIGINS.append(f"http://{host}")
+        else:
+            CSRF_TRUSTED_ORIGINS.append(f"https://*{host}")
+            CSRF_TRUSTED_ORIGINS.append(f"http://*{host}")
+
+
 # Apps
 DJANGO_APPS = [
     "modeltranslation",  # must come before admin
