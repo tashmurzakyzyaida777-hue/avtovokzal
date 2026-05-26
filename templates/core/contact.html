@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block title %}{% trans 'Контакты' %} — {{ SITE_NAME }}{% endblock %}
+{% block content %}
+<div class="container section">
+  <h1>{% trans 'Контакты' %}</h1>
+  <div class="grid grid-2 mt-3">
+    <div class="card">
+      <h3>{% trans 'Связаться с нами' %}</h3>
+      <form method="post">
+        {% csrf_token %}
+        {% for field in form %}
+          <div class="form-group">
+            <label class="form-label">{{ field.label }}</label>
+            {{ field }}
+            {% if field.errors %}<div class="form-error">{{ field.errors|striptags }}</div>{% endif %}
+          </div>
+        {% endfor %}
+        <button class="btn btn-primary btn-block">{% trans 'Отправить' %}</button>
+      </form>
+    </div>
+    <div>
+      <div class="card">
+        <h3>📞 {% trans 'Телефон' %}</h3>
+        <p>+996 (312) 000-000<br>+996 (550) 000-000</p>
+      </div>
+      <div class="card mt-2">
+        <h3>📧 Email</h3>
+        <p>info@avtobilet.kg<br>support@avtobilet.kg</p>
+      </div>
+      <div class="card mt-2">
+        <h3>📍 {% trans 'Офис' %}</h3>
+        <p>{% trans 'г. Бишкек, ул. Чуй 100' %}<br>{% trans 'Пн-Вс 9:00 - 22:00' %}</p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

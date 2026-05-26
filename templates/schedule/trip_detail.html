@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+{% load i18n humanize l10n %}
+{% block title %}{{ trip.route.origin.city.name }} → {{ trip.route.destination.city.name }} {{ trip.departure_at|date:"d.m" }} — {{ SITE_NAME }}{% endblock %}
+{% block content %}
+<div class="container section">
+  <a href="{% url 'core:search' %}" class="text-muted">← {% trans 'К поиску' %}</a>
+
+  <div class="card mt-2">
+    <div class="trip-card-row">
+      <div>
+        <div class="trip-time">{{ trip.departure_at|time:"H:i" }}</div>
+        <div class="trip-city">{{ trip.route.origin.city.name }}</div>
+        <small class="text-muted">{{ trip.route.origin.name }}</small><br>
+        <small class="text-muted">{{ trip.departure_at|date:"d.m.Y" }}</small>
+      </div>
+      <div>
+        <div class="trip-duration">{{ trip.route.duration_display }}</div>
+        <div class="trip-line"></div>
+        <div class="trip-duration">{{ trip.route.distance_km }} км</div>
+      </div>
+      <div></div>
+      <div>
+        <div class="trip-time">{{ trip.arrival_at|time:"H:i" }}</div>
+        <div class="trip-city">{{ trip.route.destination.city.name }}</div>
+        <small class="text-muted">{{ trip.route.destination.name }}</small><br>
+        <small class="text-muted">{{ trip.arrival_at|date:"d.m.Y" }}</small>
+      </div>
+    </div>
+    <div class="trip-meta mt-2">
+      <span>🚌 {{ trip.bus.model_name }} • {{ trip.bus.plate_number }}</span>
+      {% if trip.bus.bus_type.has_wifi %}<span class="badge badge-primary">Wi-Fi</span>{% endif %}
+      {% if trip.bus.bus_type.has_ac %}<span class="badge badge-primary">{% trans 'Кондиционер' %}</span>{% endif %}
+      {% if trip.bus.bus_type.has_toilet %}<span class="badge badge-primary">WC</span>{% endif %}
+      {% if trip.driver %}<span>👤 {{ trip.driver.full_name }}</span>{% endif %}
+    </div>
+  </div>
+
+  <div class="grid mt-4" style="grid-template-columns: 1fr 360px; gap:28px">
+    <div>
+      <h2>{% trans 'Выбор мест' %}</h2>
+      <p class="text-muted">{% trans 'Кликните по свободным местам, чтобы выбрать (до 4-х за раз).' %}</p>
+
+      <form method="post" action="{% url 'booking:select_seats' trip_id=trip.pk %}"
+            x-data="seatPicker({{ trip.seats_total }}, {{ taken_seats|safe }}, 4, {{ trip.base_price|unlocalize }})">
+        {% csrf_token %}
+        <input type="hidden" name="seats" :value="seatsValue">
+
+        <div class="bus-layout">
+          <div class="bus-cabin">
+            <div class="driver-area"><div class="driver-seat" title="Водитель">🧑‍✈️</div></div>
+            <div class="seat-rows">
+              {% for row in seat_rows %}
+                <div class="seat-row">
+                  {% for n in row %}
+                    <div class="seat"
+                         :class="{ taken: isTaken({{ n.number }}), selected: isSelected({{ n.number }}) }"
+                         @click="toggle({{ n.number }})">{{ n.number }}</div>
+                    {% if forloop.counter == aisle_after and not forloop.last %}<div class="seat-aisle"></div>{% endif %}
+                  {% endfor %}
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+          <div class="seat-legend">
+            <div class="seat-legend-item"><span class="dot free"></span> {% trans 'Свободно' %}</div>
+            <div class="seat-legend-item"><span class="dot selected"></span> {% trans 'Выбрано' %}</div>
+            <div class="seat-legend-item"><span class="dot taken"></span> {% trans 'Занято' %}</div>
+          </div>
+        </div>
+
+        <div class="card mt-3" x-show="count > 0" x-transition>
+          <div class="flex justify-between items-center">
+            <div>
+              <strong>{% trans 'Выбрано мест' %}:</strong> <span x-text="count"></span><br>
+              <small class="text-muted" x-text="'Места: ' + selected.join(', ')"></small>
+            </div>
+            <div class="text-right">
+              <div class="trip-price"><span x-text="totalPrice"></span> <small>сом</small></div>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-accent btn-block btn-lg mt-2" :disabled="count === 0">
+            {% trans 'Продолжить →' %}
+          </button>
+        </div>
+        <div class="card mt-3" x-show="count === 0">
+          <p class="text-muted text-center" style="margin:0">{% trans 'Выберите хотя бы одно место' %}</p>
+        </div>
+      </form>
+    </div>
+
+    <aside>
+      <div class="card">
+        <h3>{% trans 'Сводка рейса' %}</h3>
+        <table class="table" style="font-size:.9rem">
+          <tr><td>{% trans 'Откуда' %}</td><td><strong>{{ trip.route.origin.city.name }}</strong></td></tr>
+          <tr><td>{% trans 'Куда' %}</td><td><strong>{{ trip.route.destination.city.name }}</strong></td></tr>
+          <tr><td>{% trans 'Отправление' %}</td><td>{{ trip.departure_at|date:"d.m.Y H:i" }}</td></tr>
+          <tr><td>{% trans 'В пути' %}</td><td>{{ trip.route.duration_display }}</td></tr>
+          <tr><td>{% trans 'Цена за место' %}</td><td><strong>{{ trip.base_price|floatformat:0|intcomma }} сом</strong></td></tr>
+          <tr><td>{% trans 'Свободно' %}</td><td>{{ trip.seats_available }} {% trans 'из' %} {{ trip.seats_total }}</td></tr>
+        </table>
+      </div>
+      <div class="card mt-2" style="background:rgba(251,177,60,.1)">
+        <h3>💡 {% trans 'Скидки' %}</h3>
+        <ul style="padding-left:20px;margin:0">
+          <li>{% trans 'Дети до 12 лет — 50%' %}</li>
+          <li>{% trans 'Студенты — 10% по промокоду' %}</li>
+        </ul>
+      </div>
+    </aside>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load i18n humanize %}
+{% block title %}{% trans 'Маршруты' %} — {{ SITE_NAME }}{% endblock %}
+{% block content %}
+<div class="container section">
+  <h1>{% trans 'Все маршруты' %}</h1>
+  <p class="section-subtitle">{% trans 'Выберите направление, чтобы увидеть ближайшие рейсы' %}</p>
+
+  <div class="grid grid-3 mt-3">
+    {% for route in routes %}
+      <a href="{{ route.get_absolute_url }}" class="card card-hover" style="text-decoration:none;color:inherit">
+        <div class="flex justify-between items-center">
+          <h3 style="margin:0">{{ route.origin.city.name }} → {{ route.destination.city.name }}</h3>
+          <span class="badge badge-accent">{{ route.code }}</span>
+        </div>
+        <div class="trip-meta mt-2">
+          <span>🛣️ {{ route.distance_km }} км</span>
+          <span>⏱ {{ route.duration_display }}</span>
+          <span>🚌 {{ route.trip_count }} {% trans 'рейсов' %}</span>
+        </div>
+      </a>
+    {% empty %}
+      <p class="text-muted">{% trans 'Маршруты пока не добавлены.' %}</p>
+    {% endfor %}
+  </div>
+
+  {% if is_paginated %}
+    <div class="flex justify-between items-center mt-4">
+      {% if page_obj.has_previous %}<a href="?page={{ page_obj.previous_page_number }}" class="btn btn-ghost">← {% trans 'Назад' %}</a>{% else %}<span></span>{% endif %}
+      <span class="text-muted">{{ page_obj.number }} / {{ page_obj.paginator.num_pages }}</span>
+      {% if page_obj.has_next %}<a href="?page={{ page_obj.next_page_number }}" class="btn btn-ghost">{% trans 'Вперёд' %} →</a>{% else %}<span></span>{% endif %}
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

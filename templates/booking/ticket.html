@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load i18n humanize %}
+{% block title %}{% trans 'Билет' %} {{ ticket.code }}{% endblock %}
+{% block content %}
+<div class="container container-narrow section">
+  <div class="flex justify-between items-center mb-2 no-print">
+    <a href="{% url 'booking:detail' code=ticket.booking.code %}" class="text-muted">← {% trans 'К бронированию' %}</a>
+    <button class="btn btn-ghost btn-sm" onclick="printPage()">🖨 {% trans 'Печать' %}</button>
+  </div>
+
+  <div class="ticket">
+    <div>
+      <div class="text-muted" style="font-size:.85rem;letter-spacing:.05em;text-transform:uppercase">{{ SITE_NAME }} • E-TICKET</div>
+      <h1 style="margin-top:6px">{{ ticket.trip.route.origin.city.name }} → {{ ticket.trip.route.destination.city.name }}</h1>
+
+      <div class="grid grid-2 mt-3">
+        <div>
+          <small class="text-muted">{% trans 'Отправление' %}</small>
+          <div style="font-size:1.3rem;font-weight:700">{{ ticket.trip.departure_at|date:"d.m.Y H:i" }}</div>
+          <small>{{ ticket.trip.route.origin.name }}</small>
+        </div>
+        <div>
+          <small class="text-muted">{% trans 'Прибытие' %}</small>
+          <div style="font-size:1.3rem;font-weight:700">{{ ticket.trip.arrival_at|date:"d.m.Y H:i" }}</div>
+          <small>{{ ticket.trip.route.destination.name }}</small>
+        </div>
+        <div>
+          <small class="text-muted">{% trans 'Пассажир' %}</small>
+          <div style="font-weight:600">{{ ticket.passenger_name }}</div>
+          {% if ticket.passenger_document %}<small>{{ ticket.passenger_document }}</small>{% endif %}
+        </div>
+        <div>
+          <small class="text-muted">{% trans 'Место' %}</small>
+          <div style="font-size:2rem;font-weight:800;color:var(--accent-2)">{{ ticket.seat_number }}</div>
+        </div>
+        <div>
+          <small class="text-muted">{% trans 'Транспорт' %}</small>
+          <div>{{ ticket.trip.bus.model_name }}<br>{{ ticket.trip.bus.plate_number }}</div>
+        </div>
+        <div>
+          <small class="text-muted">{% trans 'Цена' %}</small>
+          <div class="trip-price">{{ ticket.price|floatformat:0|intcomma }} <small>сом</small></div>
+        </div>
+      </div>
+    </div>
+    <div class="text-center">
+      <img id="qr-code" alt="QR"
+           src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&margin=4&data={{ ticket.code }}-{{ ticket.trip.pk }}-{{ ticket.seat_number }}"
+           style="border-radius:8px;background:#fff;padding:4px">
+      <div class="mt-1"><strong>{{ ticket.code }}</strong></div>
+      <small class="text-muted">{% trans 'Покажите QR при посадке' %}</small>
+    </div>
+  </div>
+
+  <p class="text-muted mt-3 text-center no-print" style="font-size:.85rem">
+    {% trans 'Билет действителен в электронном виде. Прибудьте за 15 минут до отправления.' %}
+  </p>
+</div>
+{% endblock %}

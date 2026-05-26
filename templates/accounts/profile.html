@@ -1,0 +1,135 @@
+{% extends 'base.html' %}
+{% load i18n humanize %}
+{% block title %}{% trans 'Личный кабинет' %} — {{ SITE_NAME }}{% endblock %}
+{% block content %}
+<section class="profile-hero">
+  <div class="container">
+    <h1>{% trans 'Привет' %}, {{ user.first_name|default:user.username }}! 👋</h1>
+    <p>{% trans 'Управляйте профилем, билетами и настройками одним взглядом.' %}</p>
+  </div>
+</section>
+
+<div class="container" style="padding-bottom:60px">
+  <div class="profile-card" x-data="{ tab: 'bookings' }">
+    <div class="flex gap-3 items-center mb-3" style="flex-wrap:wrap">
+      <div class="avatar-circle">{% if user.avatar %}<img src="{{ user.avatar.url }}" style="width:100%;height:100%;border-radius:50%;object-fit:cover">{% else %}{{ user.first_name|first|default:user.username|first|upper }}{% endif %}</div>
+      <div style="flex:1;min-width:200px">
+        <h2 style="margin:0">{{ user.full_name }}</h2>
+        <div class="text-muted">
+          <span>{{ user.email }}</span>
+          {% if user.phone %} • <span>{{ user.phone }}</span>{% endif %}
+        </div>
+        <div class="mt-1 flex gap-1" style="flex-wrap:wrap">
+          <span class="badge badge-primary">{{ user.get_role_display }}</span>
+          {% if user.bookings.count %}<span class="badge badge-success">🎫 {{ user.bookings.count }} {% trans 'броней' %}</span>{% endif %}
+          <span class="badge">{% trans 'С нами с' %} {{ user.date_joined|date:"M Y" }}</span>
+        </div>
+      </div>
+      <a href="{% url 'accounts:logout' %}" class="btn btn-ghost btn-sm">🚪 {% trans 'Выйти' %}</a>
+    </div>
+
+    <div class="profile-tabs">
+      <button @click="tab = 'bookings'" :class="{ active: tab === 'bookings' }">🎫 {% trans 'Мои билеты' %}</button>
+      <button @click="tab = 'profile'" :class="{ active: tab === 'profile' }">👤 {% trans 'Профиль' %}</button>
+      <button @click="tab = 'security'" :class="{ active: tab === 'security' }">🔒 {% trans 'Безопасность' %}</button>
+    </div>
+
+    <div x-show="tab === 'bookings'" class="tab-content">
+      {% if bookings %}
+        <div class="grid stagger" style="gap:14px">
+          {% for b in bookings %}
+            <div class="card lift" style="padding:18px">
+              <div class="flex justify-between items-center" style="flex-wrap:wrap;gap:14px">
+                <div>
+                  <div class="text-muted" style="font-size:.82rem">{% trans 'Код' %}: <code>{{ b.code }}</code></div>
+                  <h3 style="margin:4px 0 6px">{{ b.trip.route.origin.city.name }} → {{ b.trip.route.destination.city.name }}</h3>
+                  <div class="trip-meta">
+                    <span>📅 {{ b.trip.departure_at|date:"d.m.Y H:i" }}</span>
+                    <span>🪑 {{ b.tickets.count }} {% trans 'мест' %}</span>
+                    <span>💵 {{ b.total_price|floatformat:0|intcomma }} сом</span>
+                  </div>
+                </div>
+                <div class="flex gap-1 items-center" style="flex-wrap:wrap">
+                  <span class="badge badge-{% if b.status == 'paid' %}success{% elif b.status == 'pending' %}warning{% else %}danger{% endif %}">{{ b.get_status_display }}</span>
+                  <a href="{% url 'booking:detail' code=b.code %}" class="btn btn-primary btn-sm">{% trans 'Открыть' %} →</a>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      {% else %}
+        <div class="text-center" style="padding:50px 20px">
+          <div style="font-size:4rem" class="float-anim">🎫</div>
+          <h3>{% trans 'У вас пока нет билетов' %}</h3>
+          <p class="text-muted">{% trans 'Найдите свой первый рейс и начните путешествие!' %}</p>
+          <a href="{% url 'core:search' %}" class="btn-shine">{% trans 'Найти рейс' %} →</a>
+        </div>
+      {% endif %}
+    </div>
+
+    <div x-show="tab === 'profile'" class="tab-content">
+      <form method="post" enctype="multipart/form-data" class="stagger">
+        {% csrf_token %}
+        <div class="grid grid-2" style="gap:14px">
+          <div class="field">
+            <input type="text" name="first_name" placeholder=" " value="{{ form.first_name.value|default:'' }}">
+            <label>{% trans 'Имя' %}</label>
+          </div>
+          <div class="field">
+            <input type="text" name="last_name" placeholder=" " value="{{ form.last_name.value|default:'' }}">
+            <label>{% trans 'Фамилия' %}</label>
+          </div>
+          <div class="field">
+            <input type="email" name="email" placeholder=" " value="{{ form.email.value|default:'' }}">
+            <label>Email</label>
+          </div>
+          <div class="field">
+            <input type="tel" name="phone" placeholder=" " value="{{ form.phone.value|default:'' }}">
+            <label>{% trans 'Телефон' %}</label>
+          </div>
+          <div class="field">
+            <input type="date" name="birth_date" placeholder=" " value="{{ form.birth_date.value|default:''|date:'Y-m-d' }}">
+            <label>{% trans 'Дата рождения' %}</label>
+          </div>
+          <div class="field">
+            <input type="text" name="passport_number" placeholder=" " value="{{ form.passport_number.value|default:'' }}">
+            <label>{% trans 'Паспорт/ID' %}</label>
+          </div>
+        </div>
+        <div class="form-group mt-2">
+          <label class="form-label">{% trans 'Аватар' %}</label>
+          <input type="file" name="avatar" accept="image/*" class="form-input">
+        </div>
+        <button class="btn-shine mt-2">{% trans 'Сохранить изменения' %}</button>
+      </form>
+    </div>
+
+    <div x-show="tab === 'security'" class="tab-content">
+      <div class="grid grid-2" style="gap:14px">
+        <div class="card lift">
+          <h3>🔑 {% trans 'Смена пароля' %}</h3>
+          <p class="text-muted">{% trans 'Регулярно меняйте пароль для безопасности.' %}</p>
+          <a href="#" class="btn btn-ghost">{% trans 'Изменить' %}</a>
+        </div>
+        <div class="card lift">
+          <h3>📧 {% trans 'Подтверждение email' %}</h3>
+          <p class="text-muted">
+            {% if user.email_verified %}{% trans 'Email подтверждён ✓' %}{% else %}{% trans 'Подтвердите ваш email' %}{% endif %}
+          </p>
+          {% if not user.email_verified %}<a href="#" class="btn btn-ghost">{% trans 'Отправить письмо' %}</a>{% endif %}
+        </div>
+        <div class="card lift">
+          <h3>🔔 {% trans 'Уведомления' %}</h3>
+          <p class="text-muted">{% trans 'SMS и email о рейсах' %}</p>
+          <label class="flex items-center gap-1"><input type="checkbox" checked> {% trans 'Включены' %}</label>
+        </div>
+        <div class="card lift" style="border-color:rgba(220,38,38,.3)">
+          <h3 style="color:var(--danger)">⚠️ {% trans 'Удалить аккаунт' %}</h3>
+          <p class="text-muted">{% trans 'Безвозвратное действие' %}</p>
+          <button class="btn btn-ghost" style="color:var(--danger);border-color:var(--danger)">{% trans 'Удалить' %}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

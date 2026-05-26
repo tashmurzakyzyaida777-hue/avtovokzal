@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% load i18n humanize %}
+{% block title %}{% trans 'Оплата' %} — {{ SITE_NAME }}{% endblock %}
+{% block content %}
+<div class="container section">
+  <h1>{% trans 'Выберите способ оплаты' %}</h1>
+  <p class="text-muted">{% trans 'Бронирование' %} <strong>{{ booking.code }}</strong></p>
+
+  <div class="grid mt-3" style="grid-template-columns: 1fr 340px; gap:28px">
+    <form method="post" x-data="{ method: '' }">
+      {% csrf_token %}
+      <div class="grid grid-2">
+        {% for code, label in methods %}
+          <label class="card card-hover" style="cursor:pointer" :class="{ 'card-active': method === '{{ code }}' }">
+            <div style="display:flex;align-items:center;gap:14px">
+              <input type="radio" name="method" value="{{ code }}" x-model="method" style="width:20px;height:20px">
+              <div>
+                <div style="font-weight:600">
+                  {% if code == 'card' %}💳{% elif code == 'elcart' %}🟢{% elif code == 'mbank' %}🏦{% elif code == 'opay' %}📱{% elif code == 'cash' %}💵{% endif %}
+                  {{ label }}
+                </div>
+                <small class="text-muted">
+                  {% if code == 'card' %}Visa, Mastercard{% elif code == 'cash' %}В кассе автовокзала{% else %}Электронный платёж{% endif %}
+                </small>
+              </div>
+            </div>
+          </label>
+        {% endfor %}
+      </div>
+
+      <div class="card mt-3" x-show="method && method !== 'cash'" x-transition>
+        <h3>{% trans 'Данные для оплаты' %}</h3>
+        <p class="text-muted">{% trans 'В демо-режиме оплата проходит автоматически. В реальной системе здесь была бы форма платёжного провайдера.' %}</p>
+        <div class="form-group">
+          <label class="form-label">{% trans 'Номер карты' %}</label>
+          <input type="text" class="form-input" placeholder="0000 0000 0000 0000" maxlength="19">
+        </div>
+        <div class="grid grid-2">
+          <div class="form-group">
+            <label class="form-label">{% trans 'Срок' %}</label>
+            <input type="text" class="form-input" placeholder="MM/YY" maxlength="5">
+          </div>
+          <div class="form-group">
+            <label class="form-label">CVV</label>
+            <input type="password" class="form-input" placeholder="•••" maxlength="4">
+          </div>
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-accent btn-lg btn-block mt-3" :disabled="!method">
+        {% trans 'Оплатить' %} {{ booking.total_price|floatformat:0|intcomma }} {% trans 'сом' %}
+      </button>
+    </form>
+
+    <aside>
+      <div class="card" style="position:sticky;top:90px">
+        <h3>{% trans 'Заказ' %}</h3>
+        <p><strong>{{ booking.trip.route.origin.city.name }} → {{ booking.trip.route.destination.city.name }}</strong></p>
+        <p class="text-muted">{{ booking.trip.departure_at|date:"d.m.Y H:i" }}</p>
+        <hr>
+        <p>{% trans 'Билетов' %}: {{ booking.tickets.count }}</p>
+        <hr>
+        <div class="flex justify-between items-center">
+          <strong>{% trans 'К оплате' %}:</strong>
+          <div class="trip-price">{{ booking.total_price|floatformat:0|intcomma }} <small>сом</small></div>
+        </div>
+      </div>
+    </aside>
+  </div>
+</div>
+{% endblock %}

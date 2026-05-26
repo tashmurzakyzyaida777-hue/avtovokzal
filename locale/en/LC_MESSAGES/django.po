@@ -1,0 +1,817 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: avtovokzal\n"
+"Report-Msgid-Bugs-To: \n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+# Header / Nav
+msgid "Главная"
+msgstr "Home"
+
+msgid "Поиск рейсов"
+msgstr "Find a trip"
+
+msgid "Маршруты"
+msgstr "Routes"
+
+msgid "Новости"
+msgstr "News"
+
+msgid "FAQ"
+msgstr "FAQ"
+
+msgid "Контакты"
+msgstr "Contacts"
+
+msgid "Войти"
+msgstr "Sign in"
+
+msgid "Регистрация"
+msgstr "Sign up"
+
+msgid "Выйти"
+msgstr "Sign out"
+
+msgid "Тема"
+msgstr "Theme"
+
+# Auth
+msgid "Вход в аккаунт"
+msgstr "Sign in to your account"
+
+msgid "С возвращением!"
+msgstr "Welcome back!"
+
+msgid "Войдите, чтобы видеть свои бронирования, скачивать билеты и пользоваться скидками постоянного клиента."
+msgstr "Sign in to view your bookings, download tickets and enjoy loyalty discounts."
+
+msgid "Бронируйте за 30 секунд"
+msgstr "Book in 30 seconds"
+
+msgid "Электронные билеты с QR"
+msgstr "Electronic tickets with QR"
+
+msgid "Любые способы оплаты"
+msgstr "Any payment method"
+
+msgid "Безопасная авторизация"
+msgstr "Secure sign-in"
+
+msgid "Введите логин и пароль ниже"
+msgstr "Enter your username and password below"
+
+msgid "Логин или email"
+msgstr "Username or email"
+
+msgid "Пароль"
+msgstr "Password"
+
+msgid "Запомнить меня"
+msgstr "Remember me"
+
+msgid "Забыли пароль?"
+msgstr "Forgot password?"
+
+msgid "Входим..."
+msgstr "Signing in..."
+
+msgid "или"
+msgstr "or"
+
+msgid "Нет аккаунта?"
+msgstr "No account yet?"
+
+msgid "Зарегистрироваться"
+msgstr "Sign up"
+
+# Signup
+msgid "Создать аккаунт"
+msgstr "Create account"
+
+msgid "Создайте аккаунт"
+msgstr "Create your account"
+
+msgid "Присоединяйтесь к нам!"
+msgstr "Join us!"
+
+msgid "Создайте аккаунт за минуту и получите доступ к личному кабинету с историей поездок и скидками."
+msgstr "Create an account in a minute and access your dashboard with trip history and discounts."
+
+msgid "История всех билетов"
+msgstr "All tickets history"
+
+msgid "Бонусы и промокоды"
+msgstr "Bonuses and promo codes"
+
+msgid "Напоминания о рейсах"
+msgstr "Trip reminders"
+
+msgid "Любимые маршруты"
+msgstr "Favorite routes"
+
+msgid "Это займёт меньше минуты"
+msgstr "It takes less than a minute"
+
+msgid "Имя"
+msgstr "First name"
+
+msgid "Фамилия"
+msgstr "Last name"
+
+msgid "Логин"
+msgstr "Username"
+
+msgid "Телефон"
+msgstr "Phone"
+
+msgid "Повторите пароль"
+msgstr "Confirm password"
+
+msgid "Слабый пароль"
+msgstr "Weak password"
+
+msgid "Нормальный пароль"
+msgstr "Decent password"
+
+msgid "Сильный пароль"
+msgstr "Strong password"
+
+msgid "Я принимаю"
+msgstr "I accept the"
+
+msgid "условия использования"
+msgstr "terms of use"
+
+msgid "и"
+msgstr "and"
+
+msgid "политику конфиденциальности"
+msgstr "privacy policy"
+
+msgid "Создаём аккаунт..."
+msgstr "Creating account..."
+
+msgid "Уже есть аккаунт?"
+msgstr "Already have an account?"
+
+# Profile
+msgid "Личный кабинет"
+msgstr "My account"
+
+msgid "Привет"
+msgstr "Hi"
+
+msgid "Управляйте профилем, билетами и настройками одним взглядом."
+msgstr "Manage your profile, tickets and settings at a glance."
+
+msgid "Мои билеты"
+msgstr "My tickets"
+
+msgid "Профиль"
+msgstr "Profile"
+
+msgid "Безопасность"
+msgstr "Security"
+
+msgid "С нами с"
+msgstr "Since"
+
+msgid "броней"
+msgstr "bookings"
+
+msgid "У вас пока нет билетов"
+msgstr "You don't have any tickets yet"
+
+msgid "Найдите свой первый рейс и начните путешествие!"
+msgstr "Find your first trip and start your journey!"
+
+msgid "Найти рейс"
+msgstr "Find a trip"
+
+msgid "Дата рождения"
+msgstr "Date of birth"
+
+msgid "Паспорт/ID"
+msgstr "Passport/ID"
+
+msgid "Аватар"
+msgstr "Avatar"
+
+msgid "Сохранить изменения"
+msgstr "Save changes"
+
+msgid "Сохранить"
+msgstr "Save"
+
+msgid "Смена пароля"
+msgstr "Change password"
+
+msgid "Регулярно меняйте пароль для безопасности."
+msgstr "Change your password regularly for security."
+
+msgid "Изменить"
+msgstr "Change"
+
+msgid "Подтверждение email"
+msgstr "Email verification"
+
+msgid "Email подтверждён ✓"
+msgstr "Email verified ✓"
+
+msgid "Подтвердите ваш email"
+msgstr "Verify your email"
+
+msgid "Отправить письмо"
+msgstr "Send email"
+
+msgid "Уведомления"
+msgstr "Notifications"
+
+msgid "SMS и email о рейсах"
+msgstr "SMS and email about trips"
+
+msgid "Включены"
+msgstr "Enabled"
+
+msgid "Удалить аккаунт"
+msgstr "Delete account"
+
+msgid "Безвозвратное действие"
+msgstr "Irreversible action"
+
+msgid "Удалить"
+msgstr "Delete"
+
+# Home
+msgid "Билеты на автобус онлайн —"
+msgstr "Bus tickets online —"
+
+msgid "просто, быстро, удобно"
+msgstr "simple, fast, convenient"
+
+msgid "Поиск, бронирование и оплата автобусных билетов по Кыргызстану и в страны СНГ. Электронный билет с QR-кодом."
+msgstr "Search, book and pay for bus tickets across Kyrgyzstan and CIS countries. E-ticket with QR code."
+
+msgid "Откуда"
+msgstr "From"
+
+msgid "Куда"
+msgstr "To"
+
+msgid "Дата"
+msgstr "Date"
+
+msgid "Дата отправления"
+msgstr "Departure date"
+
+msgid "Выберите город"
+msgstr "Select a city"
+
+msgid "Пассажиров"
+msgstr "Passengers"
+
+msgid "Найти"
+msgstr "Search"
+
+msgid "Городов"
+msgstr "Cities"
+
+msgid "Маршрутов"
+msgstr "Routes"
+
+msgid "Рейсов сегодня"
+msgstr "Trips today"
+
+msgid "Поддержка"
+msgstr "Support"
+
+msgid "Популярные маршруты"
+msgstr "Popular routes"
+
+msgid "Все маршруты"
+msgstr "All routes"
+
+msgid "рейсов"
+msgstr "trips"
+
+msgid "Почему именно мы"
+msgstr "Why us"
+
+msgid "Мгновенная бронь"
+msgstr "Instant booking"
+
+msgid "Бронируйте билеты за 30 секунд: выбрали место — получили e-билет на почту."
+msgstr "Book tickets in 30 seconds: pick a seat — get an e-ticket by email."
+
+msgid "Любой способ оплаты"
+msgstr "Any payment method"
+
+msgid "Visa, MasterCard, Элкарт, MBank, O!Деньги, наличные в кассе."
+msgstr "Visa, MasterCard, Elcart, MBank, O!Money, cash at the office."
+
+msgid "Электронный билет"
+msgstr "Electronic ticket"
+
+msgid "Печатать не обязательно — QR-код на телефоне подтвердит вашу поездку."
+msgstr "No need to print — the QR code on your phone confirms your trip."
+
+msgid "Все новости"
+msgstr "All news"
+
+msgid "Частые вопросы"
+msgstr "FAQ"
+
+msgid "Все вопросы и ответы"
+msgstr "All questions and answers"
+
+# Search
+msgid "Поиск рейсов"
+msgstr "Trip search"
+
+msgid "Выберите параметры и нажмите «Найти»"
+msgstr "Set the parameters and press Search"
+
+msgid "Мы покажем все доступные рейсы с выбором мест и ценами."
+msgstr "We'll show all available trips with seat selection and prices."
+
+msgid "Рейсов не найдено"
+msgstr "No trips found"
+
+msgid "Попробуйте изменить дату или выбрать другие города."
+msgstr "Try changing the date or pick other cities."
+
+# Routes
+msgid "Все маршруты"
+msgstr "All routes"
+
+msgid "Выберите направление, чтобы увидеть ближайшие рейсы"
+msgstr "Pick a route to see upcoming trips"
+
+msgid "Маршруты пока не добавлены."
+msgstr "No routes added yet."
+
+msgid "Назад"
+msgstr "Back"
+
+msgid "Вперёд"
+msgstr "Next"
+
+msgid "Остановки в пути"
+msgstr "Stops along the route"
+
+msgid "Ближайшие рейсы"
+msgstr "Upcoming trips"
+
+msgid "Запланированных рейсов нет."
+msgstr "No scheduled trips."
+
+msgid "Выбрать"
+msgstr "Select"
+
+msgid "Выбрать места"
+msgstr "Pick seats"
+
+# Stations
+msgid "Автовокзалы"
+msgstr "Bus terminals"
+
+msgid "Список пуст."
+msgstr "The list is empty."
+
+# Schedule / trip
+msgid "К поиску"
+msgstr "Back to search"
+
+msgid "Кондиционер"
+msgstr "Air conditioning"
+
+msgid "Выбор мест"
+msgstr "Seat selection"
+
+msgid "Кликните по свободным местам, чтобы выбрать (до 4-х за раз)."
+msgstr "Click on free seats to select (up to 4 at a time)."
+
+msgid "Свободно"
+msgstr "Free"
+
+msgid "Выбрано"
+msgstr "Selected"
+
+msgid "Занято"
+msgstr "Taken"
+
+msgid "Сводка рейса"
+msgstr "Trip summary"
+
+msgid "Отправление"
+msgstr "Departure"
+
+msgid "Прибытие"
+msgstr "Arrival"
+
+msgid "В пути"
+msgstr "Duration"
+
+msgid "Цена за место"
+msgstr "Price per seat"
+
+msgid "из"
+msgstr "of"
+
+msgid "Скидки"
+msgstr "Discounts"
+
+msgid "Дети до 12 лет — 50%"
+msgstr "Children under 12 — 50%"
+
+msgid "Студенты — 10% по промокоду"
+msgstr "Students — 10% with promo code"
+
+msgid "Выбрано мест"
+msgstr "Seats selected"
+
+msgid "Продолжить →"
+msgstr "Continue →"
+
+msgid "Выберите хотя бы одно место"
+msgstr "Select at least one seat"
+
+msgid "мест"
+msgstr "seats"
+
+# Booking
+msgid "Данные пассажиров"
+msgstr "Passenger details"
+
+msgid "Шаг 2 из 3 — введите ФИО и документ для каждого пассажира."
+msgstr "Step 2 of 3 — enter full name and document for each passenger."
+
+msgid "Пассажир"
+msgstr "Passenger"
+
+msgid "место"
+msgstr "seat"
+
+msgid "ФИО"
+msgstr "Full name"
+
+msgid "Телефон пассажира"
+msgstr "Passenger phone"
+
+msgid "Детский билет (-50%)"
+msgstr "Child ticket (-50%)"
+
+msgid "Контактные данные"
+msgstr "Contact details"
+
+msgid "Проверить и продолжить →"
+msgstr "Review and continue →"
+
+msgid "Ваш заказ"
+msgstr "Your order"
+
+msgid "Места"
+msgstr "Seats"
+
+msgid "Кол-во билетов"
+msgstr "Number of tickets"
+
+msgid "Окончательная сумма зависит от количества детских билетов."
+msgstr "Final amount depends on the number of child tickets."
+
+msgid "Примерно"
+msgstr "Estimated"
+
+msgid "Проверьте детали"
+msgstr "Review the details"
+
+msgid "Шаг 3 из 3 — проверьте всё перед оплатой."
+msgstr "Step 3 of 3 — review everything before payment."
+
+msgid "Рейс"
+msgstr "Trip"
+
+msgid "Маршрут"
+msgstr "Route"
+
+msgid "Транспорт"
+msgstr "Vehicle"
+
+msgid "Пассажиры"
+msgstr "Passengers"
+
+msgid "Место"
+msgstr "Seat"
+
+msgid "Тип"
+msgstr "Type"
+
+msgid "Цена"
+msgstr "Price"
+
+msgid "Детский"
+msgstr "Child"
+
+msgid "Взрослый"
+msgstr "Adult"
+
+msgid "Контакт для уведомлений"
+msgstr "Notification contact"
+
+msgid "Изменить данные"
+msgstr "Edit details"
+
+msgid "Перейти к оплате →"
+msgstr "Proceed to payment →"
+
+msgid "Итого"
+msgstr "Total"
+
+msgid "Мест"
+msgstr "Seats"
+
+msgid "К оплате"
+msgstr "Amount due"
+
+msgid "Бронирование"
+msgstr "Booking"
+
+msgid "Код"
+msgstr "Code"
+
+msgid "Информация о рейсе"
+msgstr "Trip information"
+
+msgid "Билеты"
+msgstr "Tickets"
+
+msgid "Пассажир"
+msgstr "Passenger"
+
+msgid "Билет"
+msgstr "Ticket"
+
+msgid "Сумма"
+msgstr "Amount"
+
+msgid "Создано"
+msgstr "Created"
+
+msgid "Оплатить"
+msgstr "Pay"
+
+msgid "Оплатить сейчас"
+msgstr "Pay now"
+
+msgid "Отменить бронь"
+msgstr "Cancel booking"
+
+msgid "Контакт"
+msgstr "Contact"
+
+msgid "сом"
+msgstr "som"
+
+msgid "К бронированию"
+msgstr "Back to booking"
+
+msgid "Печать"
+msgstr "Print"
+
+msgid "Покажите QR при посадке"
+msgstr "Show QR at boarding"
+
+msgid "Билет действителен в электронном виде. Прибудьте за 15 минут до отправления."
+msgstr "Ticket is valid electronically. Arrive 15 minutes before departure."
+
+# Payments
+msgid "Выберите способ оплаты"
+msgstr "Choose a payment method"
+
+msgid "Данные для оплаты"
+msgstr "Payment details"
+
+msgid "В демо-режиме оплата проходит автоматически. В реальной системе здесь была бы форма платёжного провайдера."
+msgstr "In demo mode payment goes through automatically. In a real system this would be the provider's form."
+
+msgid "Номер карты"
+msgstr "Card number"
+
+msgid "Срок"
+msgstr "Expiry"
+
+msgid "Заказ"
+msgstr "Order"
+
+msgid "Билетов"
+msgstr "Tickets"
+
+msgid "Оплата прошла успешно!"
+msgstr "Payment successful!"
+
+msgid "Билеты отправлены на ваш email и доступны в личном кабинете."
+msgstr "Tickets have been sent to your email and are available in your account."
+
+msgid "Ваши билеты"
+msgstr "Your tickets"
+
+msgid "Открыть билет"
+msgstr "Open ticket"
+
+msgid "На главную"
+msgstr "Home"
+
+# Status
+msgid "Оплачена"
+msgstr "Paid"
+
+msgid "Ожидает оплаты"
+msgstr "Awaiting payment"
+
+msgid "Отменена"
+msgstr "Cancelled"
+
+msgid "Истекла"
+msgstr "Expired"
+
+msgid "Статус"
+msgstr "Status"
+
+msgid "Открыть"
+msgstr "Open"
+
+# Contact
+msgid "Связаться с нами"
+msgstr "Contact us"
+
+msgid "Отправить"
+msgstr "Send"
+
+msgid "Спасибо! Ваше сообщение отправлено."
+msgstr "Thank you! Your message has been sent."
+
+msgid "Офис"
+msgstr "Office"
+
+msgid "г. Бишкек, ул. Чуй 100"
+msgstr "Bishkek, Chui str. 100"
+
+msgid "Пн-Вс 9:00 - 22:00"
+msgstr "Mon-Sun 9:00 - 22:00"
+
+msgid "Бишкек, Кыргызстан"
+msgstr "Bishkek, Kyrgyzstan"
+
+# About
+msgid "О сервисе"
+msgstr "About"
+
+msgid "О нас"
+msgstr "About us"
+
+msgid "Современная платформа для онлайн-бронирования автобусных билетов"
+msgstr "Modern platform for online bus ticket booking"
+
+msgid "AvtoBilet.kg объединяет автовокзалы и перевозчиков Кыргызстана в единой цифровой системе. Мы заботимся о том, чтобы покупка билета была быстрой, прозрачной и удобной — без очередей и звонков."
+msgstr "AvtoBilet.kg unites bus terminals and carriers of Kyrgyzstan in a single digital system. We make ticket purchases fast, transparent and convenient — no queues or phone calls."
+
+msgid "Наша миссия"
+msgstr "Our mission"
+
+msgid "Сделать пассажирские автобусные перевозки в Центральной Азии доступными и понятными для каждого."
+msgstr "Make bus transportation in Central Asia accessible and understandable for everyone."
+
+msgid "Перевозчиков"
+msgstr "Carriers"
+
+msgid "Билетов в месяц"
+msgstr "Tickets per month"
+
+# FAQ list
+msgid "Часто задаваемые вопросы"
+msgstr "Frequently asked questions"
+
+msgid "Пока нет вопросов."
+msgstr "No questions yet."
+
+# News
+msgid "Новостей пока нет."
+msgstr "No news yet."
+
+# Footer / generic
+msgid "Все права защищены."
+msgstr "All rights reserved."
+
+msgid "Сделано с"
+msgstr "Made with"
+
+msgid "в Кыргызстане"
+msgstr "in Kyrgyzstan"
+
+msgid "Сервис"
+msgstr "Service"
+
+msgid "Компания"
+msgstr "Company"
+
+msgid "Удобное онлайн-бронирование автобусных билетов с выбором мест, гибкой оплатой и круглосуточной поддержкой."
+msgstr "Convenient online booking of bus tickets with seat selection, flexible payment and 24/7 support."
+
+msgid "Вопросы и ответы"
+msgstr "Q&A"
+
+# Dashboard
+msgid "Панель управления"
+msgstr "Dashboard"
+
+msgid "Броней за сегодня"
+msgstr "Bookings today"
+
+msgid "Доход сегодня, сом"
+msgstr "Revenue today, som"
+
+msgid "Предстоящих рейсов"
+msgstr "Upcoming trips"
+
+msgid "Всего билетов"
+msgstr "Total tickets"
+
+msgid "Все"
+msgstr "All"
+
+msgid "Отпр."
+msgstr "Departure"
+
+msgid "Последние бронирования"
+msgstr "Recent bookings"
+
+msgid "Нет предстоящих рейсов."
+msgstr "No upcoming trips."
+
+msgid "Бронирований ещё нет."
+msgstr "No bookings yet."
+
+msgid "Самые популярные маршруты"
+msgstr "Most popular routes"
+
+msgid "Бронирования"
+msgstr "Bookings"
+
+msgid "Все статусы"
+msgstr "All statuses"
+
+msgid "Фильтр"
+msgstr "Filter"
+
+msgid "Код, имя, телефон..."
+msgstr "Code, name, phone..."
+
+msgid "Ничего не найдено."
+msgstr "Nothing found."
+
+msgid "Сегодня"
+msgstr "Today"
+
+msgid "Предстоящие"
+msgstr "Upcoming"
+
+msgid "Прошедшие"
+msgstr "Past"
+
+msgid "Рейсы"
+msgstr "Trips"
+
+msgid "Заполн."
+msgstr "Filled"
+
+msgid "Водитель"
+msgstr "Driver"
+
+# Languages
+msgid "Русский"
+msgstr "Russian"
+
+msgid "Кыргызча"
+msgstr "Kyrgyz"
+
+msgid "English"
+msgstr "English"
+
+# Misc
+msgid "Онлайн-бронирование автобусных билетов"
+msgstr "Online bus ticket booking"
+
+msgid "Онлайн-бронирование автобусных билетов в Кыргызстане и за рубежом"
+msgstr "Online bus ticket booking in Kyrgyzstan and abroad"
+
+msgid "Найден %(counter)s рейс"
+msgid_plural "Найдено %(counter)s рейсов"
+msgstr[0] "Found %(counter)s trip"
+msgstr[1] "Found %(counter)s trips"
+
+msgid "свободно %(n)s мест"
+msgstr "%(n)s seats free"

@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block title %}{% trans 'Автовокзалы' %} — {{ SITE_NAME }}{% endblock %}
+{% block content %}
+<div class="container section">
+  <h1>{% trans 'Автовокзалы' %}</h1>
+  <div class="grid grid-3 mt-3">
+    {% for s in stations %}
+      <div class="card card-hover">
+        <h3>{{ s.name }}</h3>
+        <p class="text-muted">📍 {{ s.city.name }}, {{ s.address }}</p>
+        {% if s.phone %}<p>📞 {{ s.phone }}</p>{% endif %}
+      </div>
+    {% empty %}
+      <p class="text-muted">{% trans 'Список пуст.' %}</p>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block title %}{{ article.title }} — {{ SITE_NAME }}{% endblock %}
+{% block content %}
+<div class="container container-narrow section">
+  <a href="{% url 'core:news' %}" class="text-muted">← {% trans 'Все новости' %}</a>
+  <h1 class="mt-2">{{ article.title }}</h1>
+  <small class="text-muted">{{ article.published_at|date:"d.m.Y H:i" }}</small>
+  {% if article.cover %}<img src="{{ article.cover.url }}" alt="" class="mt-3" style="border-radius:12px">{% endif %}
+  <div class="mt-3" style="font-size:1.05rem;line-height:1.7">{{ article.body|linebreaks }}</div>
+</div>
+{% endblock %}

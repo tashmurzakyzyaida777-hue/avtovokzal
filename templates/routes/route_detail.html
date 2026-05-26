@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% load i18n humanize %}
+{% block title %}{{ route.origin.city.name }} → {{ route.destination.city.name }} — {{ SITE_NAME }}{% endblock %}
+{% block content %}
+<div class="container section">
+  <a href="{% url 'routes:list' %}" class="text-muted">← {% trans 'Все маршруты' %}</a>
+  <div class="flex justify-between items-center mt-2" style="flex-wrap:wrap;gap:14px">
+    <h1>{{ route.origin.city.name }} → {{ route.destination.city.name }}</h1>
+    <span class="badge badge-accent">{{ route.code }}</span>
+  </div>
+  <div class="trip-meta">
+    <span>🛣️ {{ route.distance_km }} км</span>
+    <span>⏱ {{ route.duration_display }}</span>
+    <span>📍 {{ route.origin.name }}</span>
+    <span>📍 {{ route.destination.name }}</span>
+  </div>
+  {% if route.description %}<div class="card mt-3">{{ route.description|linebreaks }}</div>{% endif %}
+
+  {% if stops %}
+    <h2 class="mt-4">{% trans 'Остановки в пути' %}</h2>
+    <div class="card">
+      <ol style="padding-left:20px">
+        {% for s in stops %}
+          <li><strong>{{ s.station.name }}</strong> ({{ s.station.city.name }}) — +{{ s.offset_minutes }} мин, стоянка {{ s.stop_minutes }} мин</li>
+        {% endfor %}
+      </ol>
+    </div>
+  {% endif %}
+
+  <h2 class="mt-4">{% trans 'Ближайшие рейсы' %}</h2>
+  {% if upcoming_trips %}
+    <div class="grid" style="gap:14px">
+      {% for trip in upcoming_trips %}
+        <div class="trip-card">
+          <div>
+            <div class="trip-card-row">
+              <div>
+                <div class="trip-time">{{ trip.departure_at|time:"H:i" }}</div>
+                <div class="trip-city">{{ trip.departure_at|date:"d.m.Y" }}</div>
+              </div>
+              <div>
+                <div class="trip-duration">{{ route.duration_display }}</div>
+                <div class="trip-line"></div>
+              </div>
+              <div></div>
+              <div>
+                <div class="trip-time">{{ trip.arrival_at|time:"H:i" }}</div>
+                <div class="trip-city">{{ trip.arrival_at|date:"d.m.Y" }}</div>
+              </div>
+            </div>
+            <div class="trip-meta mt-2">
+              <span>🚌 {{ trip.bus.model_name }}</span>
+              <span>🪑 {{ trip.seats_available }} {% trans 'мест' %}</span>
+            </div>
+          </div>
+          <div class="text-center">
+            <div class="trip-price">{{ trip.base_price|floatformat:0|intcomma }} <small>сом</small></div>
+            <a href="{{ trip.get_absolute_url }}" class="btn btn-primary mt-1">{% trans 'Выбрать' %}</a>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="card text-muted">{% trans 'Запланированных рейсов нет.' %}</div>
+  {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,5 @@
+{% for city in cities %}
+  <div class="suggestion-item" onclick="document.querySelector('[name={{ field }}]').value='{{ city.pk }}';document.getElementById('suggestions-{{ field }}').innerHTML='';">{{ city.name }}</div>
+{% empty %}
+  <div class="text-muted" style="padding:8px">Не найдено</div>
+{% endfor %}

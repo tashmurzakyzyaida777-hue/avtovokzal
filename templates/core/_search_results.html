@@ -1,0 +1,47 @@
+{% load i18n humanize %}
+{% if trips %}
+  <div class="mb-2 text-muted">{% blocktrans count counter=trips.count %}Найден {{ counter }} рейс{% plural %}Найдено {{ counter }} рейсов{% endblocktrans %}</div>
+  <div class="grid" style="gap:14px">
+    {% for trip in trips %}
+      <div class="trip-card">
+        <div>
+          <div class="trip-card-row">
+            <div>
+              <div class="trip-time">{{ trip.departure_at|time:"H:i" }}</div>
+              <div class="trip-city">{{ trip.route.origin.city.name }}</div>
+              <small class="text-muted">{{ trip.route.origin.name }}</small>
+            </div>
+            <div>
+              <div class="trip-duration">{{ trip.route.duration_display }}</div>
+              <div class="trip-line"></div>
+              <div class="trip-duration">{{ trip.route.distance_km }} км</div>
+            </div>
+            <div></div>
+            <div>
+              <div class="trip-time">{{ trip.arrival_at|time:"H:i" }}</div>
+              <div class="trip-city">{{ trip.route.destination.city.name }}</div>
+              <small class="text-muted">{{ trip.route.destination.name }}</small>
+            </div>
+          </div>
+          <div class="trip-meta mt-2">
+            <span>🚌 {{ trip.bus.model_name }} • {{ trip.bus.plate_number }}</span>
+            {% if trip.bus.bus_type.has_wifi %}<span class="badge badge-primary">Wi-Fi</span>{% endif %}
+            {% if trip.bus.bus_type.has_ac %}<span class="badge badge-primary">{% trans 'Кондиционер' %}</span>{% endif %}
+            {% if trip.bus.bus_type.has_toilet %}<span class="badge badge-primary">WC</span>{% endif %}
+            <span>🪑 {% blocktrans with n=trip.seats_available %}свободно {{ n }} мест{% endblocktrans %}</span>
+          </div>
+        </div>
+        <div class="text-center">
+          <div class="trip-price">{{ trip.base_price|floatformat:0|intcomma }} <small>сом</small></div>
+          <a href="{{ trip.get_absolute_url }}" class="btn btn-primary mt-1">{% trans 'Выбрать места' %} →</a>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+{% else %}
+  <div class="card text-center" style="padding:50px 20px">
+    <div style="font-size:3rem">😕</div>
+    <h3>{% trans 'Рейсов не найдено' %}</h3>
+    <p class="text-muted">{% trans 'Попробуйте изменить дату или выбрать другие города.' %}</p>
+  </div>
+{% endif %}

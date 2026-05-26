@@ -1,0 +1,115 @@
+{% load static i18n humanize %}<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE }}" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="{% trans 'Онлайн-бронирование автобусных билетов в Кыргызстане и за рубежом' %}">
+  <title>{% block title %}{{ SITE_NAME }} — {{ SITE_TAGLINE }}{% endblock %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/main.css' %}">
+  <script src="https://unpkg.com/htmx.org@1.9.12" defer></script>
+  <script src="{% static 'js/main.js' %}" defer></script>
+  <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  {% block extra_head %}{% endblock %}
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <div class="header-inner">
+        <a href="{% url 'core:home' %}" class="logo">
+          <span class="logo-mark">🚌</span>
+          <span>{{ SITE_NAME }}</span>
+        </a>
+        <nav class="main-nav">
+          <a href="{% url 'core:home' %}" {% if request.resolver_match.url_name == 'home' %}class="active"{% endif %}>{% trans 'Главная' %}</a>
+          <a href="{% url 'core:search' %}">{% trans 'Поиск рейсов' %}</a>
+          <a href="{% url 'routes:list' %}">{% trans 'Маршруты' %}</a>
+          <a href="{% url 'core:news' %}">{% trans 'Новости' %}</a>
+          <a href="{% url 'core:faq' %}">{% trans 'FAQ' %}</a>
+          <a href="{% url 'core:contact' %}">{% trans 'Контакты' %}</a>
+        </nav>
+        <div class="header-actions">
+          <div class="lang-switch">
+            {% get_available_languages as LANGUAGES %}
+            {% get_current_language as CURRENT_LANG %}
+            {% for code, name in LANGUAGES %}
+              <form action="{% url 'set_language' %}" method="post" style="display:inline">
+                {% csrf_token %}
+                <input type="hidden" name="language" value="{{ code }}">
+                <input type="hidden" name="next" value="{{ request.path }}">
+                <button type="submit" class="lang-btn {% if code == CURRENT_LANG %}active{% endif %}"
+                  style="all:unset;cursor:pointer;padding:5px 10px;border-radius:6px;font-size:.85rem;font-weight:600;color:{% if code == CURRENT_LANG %}#fff;background:var(--primary){% else %}var(--text-muted){% endif %}">{{ code|upper }}</button>
+              </form>
+            {% endfor %}
+          </div>
+          <button class="icon-btn" onclick="toggleTheme()" title="{% trans 'Тема' %}"><span data-theme-icon>🌙</span></button>
+          {% if user.is_authenticated %}
+            <a href="{% url 'accounts:profile' %}" class="btn btn-ghost btn-sm">👤 {{ user.first_name|default:user.username }}</a>
+            {% if user.is_staff or user.is_staff_role %}
+              <a href="{% url 'dashboard:index' %}" class="btn btn-ghost btn-sm">📊</a>
+            {% endif %}
+            <a href="{% url 'accounts:logout' %}" class="btn btn-ghost btn-sm">{% trans 'Выйти' %}</a>
+          {% else %}
+            <a href="{% url 'accounts:login' %}" class="btn btn-ghost btn-sm">{% trans 'Войти' %}</a>
+            <a href="{% url 'accounts:signup' %}" class="btn btn-primary btn-sm">{% trans 'Регистрация' %}</a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </header>
+
+  {% if messages %}
+    <div class="container messages">
+      {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  <main class="main-content">
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h3>{{ SITE_NAME }}</h3>
+          <p>{% trans 'Удобное онлайн-бронирование автобусных билетов с выбором мест, гибкой оплатой и круглосуточной поддержкой.' %}</p>
+        </div>
+        <div class="footer-col">
+          <h4>{% trans 'Сервис' %}</h4>
+          <ul>
+            <li><a href="{% url 'core:search' %}">{% trans 'Поиск рейсов' %}</a></li>
+            <li><a href="{% url 'routes:list' %}">{% trans 'Маршруты' %}</a></li>
+            <li><a href="{% url 'routes:stations' %}">{% trans 'Автовокзалы' %}</a></li>
+            <li><a href="{% url 'core:faq' %}">{% trans 'Вопросы и ответы' %}</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>{% trans 'Компания' %}</h4>
+          <ul>
+            <li><a href="{% url 'core:about' %}">{% trans 'О нас' %}</a></li>
+            <li><a href="{% url 'core:news' %}">{% trans 'Новости' %}</a></li>
+            <li><a href="{% url 'core:contact' %}">{% trans 'Контакты' %}</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>{% trans 'Контакты' %}</h4>
+          <ul>
+            <li>📞 +996 (312) 000-000</li>
+            <li>📧 info@avtobilet.kg</li>
+            <li>📍 {% trans 'Бишкек, Кыргызстан' %}</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>© {% now "Y" %} {{ SITE_NAME }}. {% trans 'Все права защищены.' %}</div>
+        <div>{% trans 'Сделано с' %} ❤️ {% trans 'в Кыргызстане' %}</div>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

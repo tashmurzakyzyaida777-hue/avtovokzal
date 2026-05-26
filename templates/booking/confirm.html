@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% load i18n humanize %}
+{% block title %}{% trans 'Подтверждение' %} — {{ SITE_NAME }}{% endblock %}
+{% block content %}
+<div class="container section">
+  <h1>{% trans 'Проверьте детали' %}</h1>
+  <p class="text-muted">{% trans 'Шаг 3 из 3 — проверьте всё перед оплатой.' %}</p>
+
+  <div class="grid mt-3" style="grid-template-columns: 1fr 340px; gap:28px">
+    <div>
+      <div class="card">
+        <h3>{% trans 'Рейс' %}</h3>
+        <table class="table">
+          <tr><td>{% trans 'Маршрут' %}</td><td><strong>{{ trip.route.origin.city.name }} → {{ trip.route.destination.city.name }}</strong></td></tr>
+          <tr><td>{% trans 'Отправление' %}</td><td>{{ trip.departure_at|date:"d.m.Y H:i" }}, {{ trip.route.origin.name }}</td></tr>
+          <tr><td>{% trans 'Прибытие' %}</td><td>{{ trip.arrival_at|date:"d.m.Y H:i" }}, {{ trip.route.destination.name }}</td></tr>
+          <tr><td>{% trans 'Транспорт' %}</td><td>{{ trip.bus.model_name }} • {{ trip.bus.plate_number }}</td></tr>
+        </table>
+      </div>
+
+      <div class="card mt-3">
+        <h3>{% trans 'Пассажиры' %}</h3>
+        <table class="table">
+          <thead><tr><th>{% trans 'Место' %}</th><th>{% trans 'Пассажир' %}</th><th>{% trans 'Тип' %}</th><th>{% trans 'Цена' %}</th></tr></thead>
+          <tbody>
+            {% for item in line_items %}
+              <tr>
+                <td><strong>{{ item.seat }}</strong></td>
+                <td>{{ item.name }}</td>
+                <td>{% if item.is_child %}<span class="badge badge-warning">{% trans 'Детский' %}</span>{% else %}<span class="badge badge-primary">{% trans 'Взрослый' %}</span>{% endif %}</td>
+                <td>{{ item.price|floatformat:0|intcomma }} сом</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
+      <div class="card mt-3">
+        <h3>{% trans 'Контакт для уведомлений' %}</h3>
+        <p>{{ contact.contact_name }} • {{ contact.contact_phone }}{% if contact.contact_email %} • {{ contact.contact_email }}{% endif %}</p>
+        {% if contact.note %}<p class="text-muted">📝 {{ contact.note }}</p>{% endif %}
+      </div>
+
+      <form method="post" class="mt-3 flex gap-2">
+        {% csrf_token %}
+        <a href="{% url 'booking:passengers' trip_id=trip.pk %}" class="btn btn-ghost">← {% trans 'Изменить данные' %}</a>
+        <button type="submit" class="btn btn-accent btn-lg flex-1">{% trans 'Перейти к оплате →' %}</button>
+      </form>
+    </div>
+
+    <aside>
+      <div class="card" style="position:sticky;top:90px">
+        <h3>{% trans 'Итого' %}</h3>
+        <div class="flex justify-between mb-1"><span>{% trans 'Мест' %}:</span><strong>{{ line_items|length }}</strong></div>
+        <hr>
+        <div class="flex justify-between items-center">
+          <span>{% trans 'К оплате' %}:</span>
+          <div class="trip-price">{{ total|floatformat:0|intcomma }} <small>сом</small></div>
+        </div>
+      </div>
+    </aside>
+  </div>
+</div>
+{% endblock %}

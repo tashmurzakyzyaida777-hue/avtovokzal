@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load i18n humanize %}
+{% block title %}{% trans 'Бронирования' %} — {{ SITE_NAME }}{% endblock %}
+{% block content %}
+<div class="container section">
+  <h1>{% trans 'Бронирования' %}</h1>
+
+  <form method="get" class="card mt-3 flex gap-2 flex-wrap items-center">
+    <input type="text" name="q" value="{{ q }}" class="form-input" placeholder="{% trans 'Код, имя, телефон...' %}" style="flex:1;min-width:200px">
+    <select name="status" class="form-select" style="width:auto">
+      <option value="">{% trans 'Все статусы' %}</option>
+      {% for c, l in statuses %}<option value="{{ c }}" {% if current_status == c %}selected{% endif %}>{{ l }}</option>{% endfor %}
+    </select>
+    <button class="btn btn-primary">{% trans 'Фильтр' %}</button>
+  </form>
+
+  <div class="card mt-3">
+    <table class="table">
+      <thead><tr>
+        <th>{% trans 'Код' %}</th><th>{% trans 'Маршрут' %}</th><th>{% trans 'Контакт' %}</th>
+        <th>{% trans 'Создана' %}</th><th>{% trans 'Сумма' %}</th><th>{% trans 'Статус' %}</th><th></th>
+      </tr></thead>
+      <tbody>
+        {% for b in bookings %}
+          <tr>
+            <td><code>{{ b.code }}</code></td>
+            <td>{{ b.trip.route.origin.city.name }} → {{ b.trip.route.destination.city.name }}<br><small class="text-muted">{{ b.trip.departure_at|date:"d.m H:i" }}</small></td>
+            <td>{{ b.contact_name }}<br><small class="text-muted">{{ b.contact_phone }}</small></td>
+            <td>{{ b.created_at|date:"d.m.Y H:i" }}</td>
+            <td>{{ b.total_price|floatformat:0|intcomma }}</td>
+            <td><span class="badge badge-{% if b.status == 'paid' %}success{% elif b.status == 'pending' %}warning{% else %}danger{% endif %}">{{ b.get_status_display }}</span></td>
+            <td><a href="{% url 'booking:detail' code=b.code %}" class="btn btn-sm btn-ghost">{% trans 'Открыть' %}</a></td>
+          </tr>
+        {% empty %}
+          <tr><td colspan="7" class="text-muted">{% trans 'Ничего не найдено.' %}</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

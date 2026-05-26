@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% load i18n humanize %}
+{% block title %}{% trans 'Бронирование' %} {{ booking.code }} — {{ SITE_NAME }}{% endblock %}
+{% block content %}
+<div class="container section">
+  <a href="{% if request.user.is_authenticated %}{% url 'accounts:profile' %}{% else %}{% url 'core:home' %}{% endif %}" class="text-muted">← {% trans 'Назад' %}</a>
+  <div class="flex justify-between items-center mt-2" style="flex-wrap:wrap;gap:14px">
+    <h1>{% trans 'Бронирование' %} {{ booking.code }}</h1>
+    <span class="badge badge-{% if booking.status == 'paid' %}success{% elif booking.status == 'pending' %}warning{% else %}danger{% endif %}" style="font-size:1rem;padding:6px 14px">
+      {{ booking.get_status_display }}
+    </span>
+  </div>
+
+  {% if booking.status == 'pending' and not booking.is_expired %}
+    <div class="alert alert-warning" x-data="countdownComponent('{{ booking.expires_at|date:'c' }}')">
+      ⏰ {% trans 'Оплатите в течение' %} <strong x-text="timeLeft"></strong>, {% trans 'иначе бронь будет аннулирована.' %}
+      <a href="{% url 'payments:checkout' code=booking.code %}" class="btn btn-accent btn-sm" style="margin-left:10px">{% trans 'Оплатить сейчас' %}</a>
+    </div>
+  {% endif %}
+
+  <div class="grid mt-3" style="grid-template-columns: 1fr 340px; gap:28px">
+    <div>
+      <div class="card">
+        <h3>{% trans 'Информация о рейсе' %}</h3>
+        <div class="trip-card-row">
+          <div>
+            <div class="trip-time">{{ booking.trip.departure_at|time:"H:i" }}</div>
+            <div class="trip-city">{{ booking.trip.route.origin.city.name }}</div>
+            <small class="text-muted">{{ booking.trip.route.origin.name }}</small>
+          </div>
+          <div>
+            <div class="trip-duration">{{ booking.trip.route.duration_display }}</div>
+            <div class="trip-line"></div>
+          </div>
+          <div></div>
+          <div>
+            <div class="trip-time">{{ booking.trip.arrival_at|time:"H:i" }}</div>
+            <div class="trip-city">{{ booking.trip.route.destination.city.name }}</div>
+            <small class="text-muted">{{ booking.trip.route.destination.name }}</small>
+          </div>
+        </div>
+        <div class="trip-meta mt-2">
+          <span>📅 {{ booking.trip.departure_at|date:"d.m.Y" }}</span>
+          <span>🚌 {{ booking.trip.bus.model_name }} • {{ booking.trip.bus.plate_number }}</span>
+        </div>
+      </div>
+
+      <div class="card mt-3">
+        <h3>{% trans 'Билеты' %}</h3>
+        <table class="table">
+          <thead><tr><th>{% trans 'Код' %}</th><th>{% trans 'Место' %}</th><th>{% trans 'Пассажир' %}</th><th>{% trans 'Цена' %}</th><th></th></tr></thead>
+          <tbody>
+            {% for t in booking.tickets.all %}
+              <tr>
+                <td><code>{{ t.code }}</code></td>
+                <td><strong>{{ t.seat_number }}</strong></td>
+                <td>{{ t.passenger_name }}{% if t.is_child %} <span class="badge badge-warning">{% trans 'Детский' %}</span>{% endif %}</td>
+                <td>{{ t.price|floatformat:0|intcomma }} сом</td>
+                <td><a href="{% url 'booking:ticket' code=t.code %}" class="btn btn-sm btn-ghost">🎫 {% trans 'Билет' %}</a></td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <aside>
+      <div class="card">
+        <h3>{% trans 'Сумма' %}</h3>
+        <div class="trip-price" style="font-size:2rem">{{ booking.total_price|floatformat:0|intcomma }} <small>сом</small></div>
+        <hr>
+        <p class="text-muted">{% trans 'Создано' %}: {{ booking.created_at|date:"d.m.Y H:i" }}</p>
+        {% if booking.status == 'pending' %}
+          <a href="{% url 'payments:checkout' code=booking.code %}" class="btn btn-accent btn-block">{% trans 'Оплатить' %}</a>
+        {% endif %}
+        {% if booking.status in 'pending,paid' %}
+          <form method="post" action="{% url 'booking:cancel' code=booking.code %}" class="mt-1" onsubmit="return confirm('Отменить бронь?')">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-ghost btn-block">{% trans 'Отменить бронь' %}</button>
+          </form>
+        {% endif %}
+      </div>
+      <div class="card mt-2">
+        <h3>{% trans 'Контакт' %}</h3>
+        <p>{{ booking.contact_name }}<br>{{ booking.contact_phone }}{% if booking.contact_email %}<br>{{ booking.contact_email }}{% endif %}</p>
+      </div>
+    </aside>
+  </div>
+</div>
+{% endblock %}

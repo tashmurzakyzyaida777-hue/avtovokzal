@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block title %}{% trans 'Регистрация' %} — {{ SITE_NAME }}{% endblock %}
+{% block content %}
+<div class="auth-shell">
+  <div class="auth-art">
+    <span class="bus-anim">🚌</span>
+    <div class="art-content">
+      <h2>{% trans 'Присоединяйтесь к нам!' %}</h2>
+      <p>{% trans 'Создайте аккаунт за минуту и получите доступ к личному кабинету с историей поездок и скидками.' %}</p>
+      <ul class="art-features">
+        <li><span class="ico">🎯</span><span>{% trans 'История всех билетов' %}</span></li>
+        <li><span class="ico">🎁</span><span>{% trans 'Бонусы и промокоды' %}</span></li>
+        <li><span class="ico">🔔</span><span>{% trans 'Напоминания о рейсах' %}</span></li>
+        <li><span class="ico">⭐</span><span>{% trans 'Любимые маршруты' %}</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="auth-form-side">
+    <div class="auth-card" style="max-width:500px">
+      <h1>{% trans 'Создайте аккаунт' %}</h1>
+      <p class="auth-subtitle">{% trans 'Это займёт меньше минуты' %}</p>
+
+      <form method="post" x-data="{ loading: false, step: 1, total: 3 }" @submit="loading = true">
+        {% csrf_token %}
+
+        <div class="stagger">
+          <div class="grid grid-2" style="gap:14px">
+            <div class="field">
+              <input type="text" name="first_name" placeholder=" " required value="{{ form.first_name.value|default:'' }}">
+              <label>{% trans 'Имя' %}</label>
+              {% if form.first_name.errors %}<div class="field-error">{{ form.first_name.errors|striptags }}</div>{% endif %}
+            </div>
+            <div class="field">
+              <input type="text" name="last_name" placeholder=" " required value="{{ form.last_name.value|default:'' }}">
+              <label>{% trans 'Фамилия' %}</label>
+              {% if form.last_name.errors %}<div class="field-error">{{ form.last_name.errors|striptags }}</div>{% endif %}
+            </div>
+          </div>
+
+          <div class="field">
+            <input type="text" name="username" placeholder=" " required value="{{ form.username.value|default:'' }}" autocomplete="username">
+            <label>{% trans 'Логин' %}</label>
+            <span class="field-icon">@</span>
+            {% if form.username.errors %}<div class="field-error">{{ form.username.errors|striptags }}</div>{% endif %}
+          </div>
+
+          <div class="field">
+            <input type="email" name="email" placeholder=" " required value="{{ form.email.value|default:'' }}" autocomplete="email">
+            <label>Email</label>
+            <span class="field-icon">📧</span>
+            {% if form.email.errors %}<div class="field-error">{{ form.email.errors|striptags }}</div>{% endif %}
+          </div>
+
+          <div class="field">
+            <input type="tel" name="phone" placeholder=" " required value="{{ form.phone.value|default:'' }}" autocomplete="tel">
+            <label>{% trans 'Телефон' %}</label>
+            <span class="field-icon">📱</span>
+            {% if form.phone.errors %}<div class="field-error">{{ form.phone.errors|striptags }}</div>{% endif %}
+          </div>
+
+          <div class="field" x-data="{ show: false, val: '' }">
+            <input :type="show ? 'text' : 'password'" name="password1" placeholder=" " required x-model="val" autocomplete="new-password">
+            <label>{% trans 'Пароль' %}</label>
+            <span class="field-icon" style="cursor:pointer;pointer-events:auto" @click="show = !show" x-text="show ? '🙈' : '👁'"></span>
+            <div x-show="val.length > 0" x-transition style="margin-top:6px">
+              <div style="display:flex;gap:4px">
+                <div style="flex:1;height:3px;border-radius:2px" :style="{ background: val.length >= 1 ? (val.length < 6 ? '#dc2626' : val.length < 10 ? '#d97706' : '#16a34a') : 'var(--border)' }"></div>
+                <div style="flex:1;height:3px;border-radius:2px" :style="{ background: val.length >= 6 ? (val.length < 10 ? '#d97706' : '#16a34a') : 'var(--border)' }"></div>
+                <div style="flex:1;height:3px;border-radius:2px" :style="{ background: val.length >= 10 ? '#16a34a' : 'var(--border)' }"></div>
+              </div>
+              <small class="text-muted" style="font-size:.78rem" x-text="val.length < 6 ? '{% trans 'Слабый пароль' %}' : val.length < 10 ? '{% trans 'Нормальный пароль' %}' : '{% trans 'Сильный пароль' %}'"></small>
+            </div>
+            {% if form.password1.errors %}<div class="field-error">{{ form.password1.errors|striptags }}</div>{% endif %}
+          </div>
+
+          <div class="field">
+            <input type="password" name="password2" placeholder=" " required autocomplete="new-password">
+            <label>{% trans 'Повторите пароль' %}</label>
+            <span class="field-icon">🔒</span>
+            {% if form.password2.errors %}<div class="field-error">{{ form.password2.errors|striptags }}</div>{% endif %}
+          </div>
+
+          <label class="flex items-center gap-1" style="cursor:pointer;font-size:.88rem">
+            <input type="checkbox" required style="width:16px;height:16px">
+            <span>{% trans 'Я принимаю' %} <a href="#">{% trans 'условия использования' %}</a> {% trans 'и' %} <a href="#">{% trans 'политику конфиденциальности' %}</a></span>
+          </label>
+
+          <button type="submit" class="btn-shine" :class="{ loading: loading }">
+            <span x-show="!loading">{% trans 'Создать аккаунт' %} →</span>
+            <span x-show="loading">{% trans 'Создаём аккаунт...' %}</span>
+          </button>
+        </div>
+      </form>
+
+      <div class="auth-footer">
+        {% trans 'Уже есть аккаунт?' %} <a href="{% url 'accounts:login' %}">{% trans 'Войти' %}</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
