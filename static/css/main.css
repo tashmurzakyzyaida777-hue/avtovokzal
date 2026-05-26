@@ -815,3 +815,117 @@ h3 { font-size: 1.3rem; }
     transition-duration: .01ms !important;
   }
 }
+
+/* ============================================================
+   PREMIUM STYLISH UPGRADES: GLASSMORPHISM, SCROLL-REVEAL, GRADIENTS
+   ============================================================ */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Sticky Premium Header with Backdrop Blur */
+.site-header {
+  background: rgba(255, 255, 255, 0.8) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  border-bottom: 1px solid rgba(221, 227, 238, 0.5) !important;
+}
+
+[data-theme="dark"] .site-header {
+  background: rgba(18, 32, 56, 0.8) !important;
+  border-bottom: 1px solid rgba(35, 52, 84, 0.5) !important;
+}
+
+/* Scroll Reveal Effect Classes */
+.scroll-reveal {
+  opacity: 0;
+  transform: translateY(32px) scale(0.98);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, opacity;
+}
+
+.scroll-reveal.reveal-active {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* Animation Delays for Staggering Reveal */
+.delay-1 { transition-delay: 0.1s; }
+.delay-2 { transition-delay: 0.2s; }
+.delay-3 { transition-delay: 0.3s; }
+.delay-4 { transition-delay: 0.4s; }
+
+/* Glowing Glassmorphic Stat Cards */
+.stat-card {
+  border: 1px solid var(--border);
+  background: linear-gradient(135deg, var(--surface) 0%, var(--surface-2) 100%);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: radial-gradient(circle at 10% 10%, rgba(251, 177, 60, 0.15), transparent 60%);
+  pointer-events: none;
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--accent);
+}
+
+/* Premium Card hover glowing border */
+.card-hover {
+  position: relative;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.card-hover:hover {
+  border-color: var(--accent) !important;
+  box-shadow: 0 20px 40px rgba(15, 29, 58, 0.12) !important;
+  transform: translateY(-6px) scale(1.02) !important;
+}
+
+[data-theme="dark"] .card-hover:hover {
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* Hero Section gradient overlay */
+.hero {
+  background: linear-gradient(135deg, #07162c 0%, #0b2545 40%, #13315c 80%) !important;
+  padding: 100px 0 160px !important;
+}
+
+.hero h1 {
+  font-size: 3.5rem !important;
+  line-height: 1.1 !important;
+  background: linear-gradient(135deg, #ffffff 30%, #fbb13c 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 24px !important;
+}
+
+/* Float visual indicator on Search Button */
+.btn-accent {
+  box-shadow: 0 4px 14px rgba(251, 177, 60, 0.4);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-accent:hover {
+  box-shadow: 0 8px 24px rgba(251, 177, 60, 0.6) !important;
+  transform: translateY(-3px) scale(1.03) !important;
+}
+
+/* Modern Rounded Accordion FAQs */
+.faq-btn {
+  transition: all 0.2s ease;
+}
+.faq-btn:hover {
+  background: var(--surface-2) !important;
+  color: var(--primary) !important;
+}
+

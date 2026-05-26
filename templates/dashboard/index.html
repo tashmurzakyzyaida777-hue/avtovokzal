@@ -2,7 +2,7 @@
 {% load i18n humanize %}
 {% block title %}{% trans 'Панель управления' %} — {{ SITE_NAME }}{% endblock %}
 {% block content %}
-<div class="container section">
+<div class="container section scroll-reveal">
   <h1>{% trans 'Панель управления' %}</h1>
 
   <div class="grid grid-4 mt-3">
@@ -24,7 +24,7 @@
     </div>
   </div>
 
-  <div class="grid grid-2 mt-4">
+  <div class="grid grid-2 mt-4 scroll-reveal delay-1">
     <div class="card">
       <div class="flex justify-between items-center mb-2">
         <h3 style="margin:0">{% trans 'Ближайшие рейсы' %}</h3>
@@ -68,7 +68,7 @@
     </div>
   </div>
 
-  <div class="card mt-3">
+  <div class="card mt-3 scroll-reveal delay-2">
     <h3>{% trans 'Самые популярные маршруты' %}</h3>
     <table class="table">
       <thead><tr><th>{% trans 'Маршрут' %}</th><th>{% trans 'Код' %}</th><th>{% trans 'Броней' %}</th></tr></thead>

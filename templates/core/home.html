@@ -3,52 +3,52 @@
 {% block title %}{{ SITE_NAME }} — {% trans 'Онлайн-бронирование автобусных билетов' %}{% endblock %}
 {% block content %}
 <section class="hero">
-  <div class="container hero-content">
+  <div class="container hero-content fade-in-up">
     <h1>{% trans 'Билеты на автобус онлайн —' %}<br>{% trans 'просто, быстро, удобно' %}</h1>
     <p class="hero-sub">{% trans 'Поиск, бронирование и оплата автобусных билетов по Кыргызстану и в страны СНГ. Электронный билет с QR-кодом.' %}</p>
   </div>
 </section>
 
 <div class="container">
-  <form class="search-card" method="get" action="{% url 'core:search' %}" x-data="{ origin:'', destination:'', date:'', passengers:1 }">
+  <form class="search-card scale-in" method="get" action="{% url 'core:search' %}" x-data="{ origin:'', destination:'', date:'', passengers:1 }">
     <div class="form-group">
-      <label class="form-label">{% trans 'Откуда' %}</label>
+      <label class="form-label">📍 {% trans 'Откуда' %}</label>
       {{ search_form.origin }}
     </div>
-    <div class="form-group">
-      <label class="form-label">{% trans 'Куда' %}</label>
+    <div class="form-group" style="position:relative">
+      <label class="form-label">🎯 {% trans 'Куда' %}</label>
       {{ search_form.destination }}
     </div>
     <div class="form-group">
-      <label class="form-label">{% trans 'Дата' %}</label>
+      <label class="form-label">📅 {% trans 'Дата' %}</label>
       {{ search_form.date }}
     </div>
     <div class="form-group">
-      <label class="form-label">{% trans 'Пассажиров' %}</label>
+      <label class="form-label">👥 {% trans 'Пассажиров' %}</label>
       {{ search_form.passengers }}
     </div>
-    <button type="submit" class="btn btn-accent btn-lg">🔍 {% trans 'Найти' %}</button>
+    <button type="submit" class="btn btn-accent btn-lg btn-shine">🔍 {% trans 'Найти' %}</button>
   </form>
 </div>
 
 <section class="section">
   <div class="container">
-    <div class="grid grid-4">
-      <div class="stat-card">
+    <div class="grid grid-4 stagger">
+      <div class="stat-card scroll-reveal">
         <div class="stat-value">{{ stats.cities }}</div>
-        <div class="stat-label">{% trans 'Городов' %}</div>
+        <div class="stat-label">🗺️ {% trans 'Городов' %}</div>
       </div>
-      <div class="stat-card">
+      <div class="stat-card scroll-reveal delay-1">
         <div class="stat-value">{{ stats.routes }}</div>
-        <div class="stat-label">{% trans 'Маршрутов' %}</div>
+        <div class="stat-label">🛣️ {% trans 'Маршрутов' %}</div>
       </div>
-      <div class="stat-card">
+      <div class="stat-card scroll-reveal delay-2">
         <div class="stat-value">{{ stats.trips_today }}</div>
-        <div class="stat-label">{% trans 'Рейсов сегодня' %}</div>
+        <div class="stat-label">🚌 {% trans 'Рейсов сегодня' %}</div>
       </div>
-      <div class="stat-card">
+      <div class="stat-card scroll-reveal delay-3">
         <div class="stat-value">24/7</div>
-        <div class="stat-label">{% trans 'Поддержка' %}</div>
+        <div class="stat-label">☎️ {% trans 'Поддержка' %}</div>
       </div>
     </div>
   </div>
@@ -57,15 +57,15 @@
 {% if popular_routes %}
 <section class="section">
   <div class="container">
-    <div class="section-header">
-      <h2>{% trans 'Популярные маршруты' %}</h2>
+    <div class="section-header scroll-reveal">
+      <h2>🔥 {% trans 'Популярные маршруты' %}</h2>
       <a href="{% url 'routes:list' %}" class="btn btn-ghost btn-sm">{% trans 'Все маршруты' %} →</a>
     </div>
     <div class="grid grid-3">
       {% for route in popular_routes %}
-        <a href="{{ route.get_absolute_url }}" class="card card-hover" style="text-decoration:none;color:inherit">
+        <a href="{{ route.get_absolute_url }}" class="card card-hover scroll-reveal {% if forloop.counter == 1 %}delay-1{% elif forloop.counter == 2 %}delay-2{% else %}delay-3{% endif %}" style="text-decoration:none;color:inherit">
           <div class="flex justify-between items-center mb-2">
-            <h3 style="margin:0;color:var(--primary)">{{ route.origin.city.name }} → {{ route.destination.city.name }}</h3>
+            <h3 style="margin:0;color:var(--primary)">{{ route.origin.city.name }} ➡️ {{ route.destination.city.name }}</h3>
             <span class="badge badge-accent">{{ route.code }}</span>
           </div>
           <div class="trip-meta">
@@ -82,21 +82,21 @@
 
 <section class="section" style="background:var(--surface)">
   <div class="container">
-    <div class="section-header">
-      <h2>{% trans 'Почему именно мы' %}</h2>
+    <div class="section-header scroll-reveal">
+      <h2>⭐ {% trans 'Почему именно мы' %}</h2>
     </div>
     <div class="grid grid-3">
-      <div class="card">
+      <div class="card scroll-reveal delay-1">
         <div style="font-size:2.5rem">⚡</div>
         <h3>{% trans 'Мгновенная бронь' %}</h3>
         <p class="text-muted">{% trans 'Бронируйте билеты за 30 секунд: выбрали место — получили e-билет на почту.' %}</p>
       </div>
-      <div class="card">
+      <div class="card scroll-reveal delay-2">
         <div style="font-size:2.5rem">💳</div>
         <h3>{% trans 'Любой способ оплаты' %}</h3>
         <p class="text-muted">{% trans 'Visa, MasterCard, Элкарт, MBank, O!Деньги, наличные в кассе.' %}</p>
       </div>
-      <div class="card">
+      <div class="card scroll-reveal delay-3">
         <div style="font-size:2.5rem">🎫</div>
         <h3>{% trans 'Электронный билет' %}</h3>
         <p class="text-muted">{% trans 'Печатать не обязательно — QR-код на телефоне подтвердит вашу поездку.' %}</p>
@@ -108,14 +108,14 @@
 {% if news %}
 <section class="section">
   <div class="container">
-    <div class="section-header">
-      <h2>{% trans 'Новости' %}</h2>
+    <div class="section-header scroll-reveal">
+      <h2>📰 {% trans 'Последние новости' %}</h2>
       <a href="{% url 'core:news' %}" class="btn btn-ghost btn-sm">{% trans 'Все новости' %} →</a>
     </div>
     <div class="grid grid-3">
       {% for n in news %}
-        <article class="card card-hover">
-          <small class="text-muted">{{ n.published_at|date:"d.m.Y" }}</small>
+        <article class="card card-hover scroll-reveal {% if forloop.counter == 1 %}delay-1{% elif forloop.counter == 2 %}delay-2{% else %}delay-3{% endif %}">
+          <small class="text-muted">📅 {{ n.published_at|date:"d.m.Y" }}</small>
           <h3 style="margin:6px 0"><a href="{% url 'core:news_detail' slug=n.slug %}">{{ n.title }}</a></h3>
           <p class="text-muted">{{ n.summary }}</p>
         </article>
@@ -128,11 +128,14 @@
 {% if faqs %}
 <section class="section" style="background:var(--surface)">
   <div class="container container-narrow">
-    <div class="section-header"><h2>{% trans 'Частые вопросы' %}</h2></div>
-    <div x-data="{ open: null }">
+    <div class="section-header scroll-reveal">
+      <h2>❓ {% trans 'Частые вопросы' %}</h2>
+    </div>
+    <div x-data="{ open: null }" class="stagger">
       {% for f in faqs %}
-        <div class="card mb-1" style="padding:0">
+        <div class="card mb-1 scroll-reveal {% if forloop.counter == 1 %}delay-1{% elif forloop.counter == 2 %}delay-2{% else %}delay-3{% endif %}" style="padding:0">
           <button @click="open = open === {{ forloop.counter }} ? null : {{ forloop.counter }}"
+            class="faq-btn"
             style="all:unset;cursor:pointer;width:100%;padding:18px 22px;display:flex;justify-content:space-between;align-items:center;font-weight:600">
             <span>{{ f.question }}</span>
             <span x-text="open === {{ forloop.counter }} ? '−' : '+'" style="font-size:1.5rem;color:var(--accent)"></span>
@@ -141,10 +144,11 @@
         </div>
       {% endfor %}
     </div>
-    <div class="text-center mt-3">
+    <div class="text-center mt-3 scroll-reveal">
       <a href="{% url 'core:faq' %}" class="btn btn-ghost">{% trans 'Все вопросы и ответы' %} →</a>
     </div>
   </div>
 </section>
 {% endif %}
 {% endblock %}
+

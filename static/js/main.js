@@ -106,4 +106,18 @@
       }
     };
   };
+
+  // ===== Scroll Reveal Animation Engine =====
+  document.addEventListener('DOMContentLoaded', () => {
+    const reveals = document.querySelectorAll('.scroll-reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('reveal-active');
+        }
+      });
+    }, { threshold: 0.08 });
+    reveals.forEach(el => observer.observe(el));
+  });
 })();
+
